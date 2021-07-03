@@ -69,7 +69,7 @@ pub mod pallet {
     /// Extrinsics
     #[pallet::call]
     impl<T: Config> Pallet<T> {
-        #[pallet::weight(10_000 + T::DbWeight::get().writes(1))]
+        #[pallet::weight(10_000 + T::DbWeight::get().reads(1) + T::DbWeight::get().writes(1))]
         pub fn transfer_ownership(origin: OriginFor<T>, new_owner: T::AccountId) -> DispatchResult {
             // Check that the extrinsic was signed and get the signer.
             let sender = ensure_signed(origin)?;
@@ -90,7 +90,7 @@ pub mod pallet {
             Ok(())
         }
 
-        #[pallet::weight(10_000 + T::DbWeight::get().writes(1))]
+        #[pallet::weight(10_000 + T::DbWeight::get().reads(1) + T::DbWeight::get().writes(1))]
         pub fn set_relayer(
             origin: OriginFor<T>,
             relayer: T::AccountId,
@@ -115,7 +115,7 @@ pub mod pallet {
             Ok(())
         }
 
-        #[pallet::weight(10_000 + T::DbWeight::get().writes(1))]
+        #[pallet::weight(10_000 + T::DbWeight::get().reads(1) + T::DbWeight::get().writes(values.len() as u64))]
         pub fn relay(
             origin: OriginFor<T>,
             values: Vec<(Vec<u8>, u64, u64, u64)>,
