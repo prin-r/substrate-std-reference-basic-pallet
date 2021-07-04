@@ -29,6 +29,8 @@ The relayers are assigned the role by the owner of the pallet. After the data is
     🏛 Storage
 ```
 
+---
+
 ### Pallet
 
 #### Storages
