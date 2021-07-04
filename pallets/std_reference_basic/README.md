@@ -33,6 +33,8 @@ The relayers are assigned the role by the owner of the pallet. After the data is
 
 ### Pallet
 
+—
+
 #### Storages
 
 Storage allows you to store data in your blockchain that is persisted between blocks and can be accessed from within your runtime logic.
@@ -43,6 +45,8 @@ Storage allows you to store data in your blockchain that is persisted between bl
   - mapping(`AccountId` => `bool`)
 - Refs
   - mapping(`Vec<u8>` => (`u64`, `u64`, `u64`))
+
+—
 
 #### Events
 
@@ -61,6 +65,8 @@ The pallet can emit events when it wants to notify external entities about chang
 - RefDataUpdate(`Vec<u8>`, `u64`, `u64`, `u64`)
   - This event will be emitted every time data is written to the storage `Refs`. For this pallet, only `relay` function can change the data within `Refs`.
 
+—
+
 #### Errors
 
 Runtime code should explicitly and gracefully handle all error cases, which is to say that runtime code must be "non-throwing", or must never "panic" to use Rust terminology. A common idiom for writing non-throwing Rust code is to write functions that return Result types. The Result enum type possesses an Err variant that allows a function to indicate that it failed to execute successfully without needing to panic.
@@ -74,6 +80,8 @@ Runtime code should explicitly and gracefully handle all error cases, which is t
 
 #### Extrinsics
 
+—
+
 An extrinsic is a piece of information that comes from outside the chain and is included in a block. Extrinsics fall into three categories: inherents, signed transactions, and unsigned transactions.
 
 - transfer_ownership(new_owner: `AccountId`)
@@ -82,6 +90,8 @@ An extrinsic is a piece of information that comes from outside the chain and is 
   - ...
 - relay(values: `Vec<(Vec<u8>, u64, u64, u64)>`)
   - ...
+
+—
 
 #### Views
 
