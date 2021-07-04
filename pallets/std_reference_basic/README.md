@@ -33,7 +33,7 @@ The relayers are assigned the role by the owner of the pallet. After the data is
 
 ### Pallet
 
-—
+---
 
 #### Storages
 
@@ -46,7 +46,7 @@ Storage allows you to store data in your blockchain that is persisted between bl
 - Refs
   - mapping(`Vec<u8>` => (`u64`, `u64`, `u64`))
 
-—
+---
 
 #### Events
 
@@ -65,7 +65,7 @@ The pallet can emit events when it wants to notify external entities about chang
 - RefDataUpdate(`Vec<u8>`, `u64`, `u64`, `u64`)
   - This event will be emitted every time data is written to the storage `Refs`. For this pallet, only `relay` function can change the data within `Refs`.
 
-—
+---
 
 #### Errors
 
@@ -78,9 +78,9 @@ Runtime code should explicitly and gracefully handle all error cases, which is t
 - NotARelayer
   - This error will be raised when a non-relayer account attempts to relay anything into the pallet.
 
-#### Extrinsics
+---
 
-—
+#### Extrinsics
 
 An extrinsic is a piece of information that comes from outside the chain and is included in a block. Extrinsics fall into three categories: inherents, signed transactions, and unsigned transactions.
 
@@ -91,7 +91,7 @@ An extrinsic is a piece of information that comes from outside the chain and is 
 - relay(values: `Vec<(Vec<u8>, u64, u64, u64)>`)
   - ...
 
-—
+———
 
 #### Views
 
