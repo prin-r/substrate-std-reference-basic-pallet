@@ -35,7 +35,7 @@ The relayers are assigned the role by the owner of the pallet. After the data is
 
 Pallets are a special kind of Rust module made up of a set of types, trait implementations and functions from which Substrate runtimes can be composed.
 
-#### Storages
+#### 🏛 Storages
 
 Storage allows you to store data in your blockchain that is persisted between blocks and can be accessed from within your runtime logic.
 
@@ -53,7 +53,7 @@ Storage allows you to store data in your blockchain that is persisted between bl
     2. resolve_time: A timestamp of the asset's value on Band chain.
     3. request_id: A request id on Band chain that relevant to the asset's value and timestamp.
 
-#### Events
+#### 🎉 Events
 
 The pallet can emit events when it wants to notify external entities about changes or conditions in the runtime to external entities like users, chain explorers, or dApps.
 
@@ -81,7 +81,7 @@ The pallet can emit events when it wants to notify external entities about chang
     | resolve time | `u64` |A timestamp of the asset's value on Band chain|
     | request id | `u64` |A request id on Band chain that relevant to the asset's value and timestamp|
 
-#### Errors
+#### 🚨 Errors
 
 Runtime code should explicitly and gracefully handle all error cases, which is to say that runtime code must be "non-throwing", or must never "panic" to use Rust terminology. A common idiom for writing non-throwing Rust code is to write functions that return Result types. The Result enum type possesses an Err variant that allows a function to indicate that it failed to execute successfully without needing to panic.
 
@@ -92,7 +92,7 @@ Runtime code should explicitly and gracefully handle all error cases, which is t
 - NotARelayer
   - This error will be raised when a non-relayer account attempts to relay anything into the pallet.
 
-#### Extrinsics
+#### 🛸 xtrinsics
 
 An extrinsic is a piece of information that comes from outside the chain and is included in a block. Extrinsics fall into three categories: inherents, signed transactions, and unsigned transactions.
 
@@ -120,7 +120,7 @@ An extrinsic is a piece of information that comes from outside the chain and is 
        | resolve time | `u64` |A timestamp of the asset's value on Band chain|
        | request id | `u64` |A request id on Band chain that relevant to the asset's value and timestamp|
 
-#### Views
+#### 🔮 Views
 
 Functions that help other pallets to query information in this pallet.
 
