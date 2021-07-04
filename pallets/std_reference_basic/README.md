@@ -40,18 +40,20 @@ Pallets are a special kind of Rust module made up of a set of types, trait imple
 Storage allows you to store data in your blockchain that is persisted between blocks and can be accessed from within your runtime logic.
 
 - Owner
-  - A single value of `AccountId`
+  - A single value of `AccountId` that represent an account of the owner.
 - Relayers
-  - mapping(`AccountId` => `bool`)
+  - A mapping(`AccountId` => `bool`)
   - key `AccountId`: Any `AccountId`.
   - value `bool` : A flag that indicates whether the `AccountId` has the authority to relay data.
 - Refs
-  - mapping(`Vec<u8>` => (`u64`, `u64`, `u64`))
+  - A mapping(`Vec<u8>` => (`u64`, `u64`, `u64`))
   - key `Vec<u8>` : A string symbol of the asset in bytes. For example "BTC" -> [66, 84, 67].
   - value (`u64`, `u64`, `u64`) : A tuple of (rate, resolve_time, request_id).
-    1. rate: The asset's value in dollars.
-    2. resolve_time: A timestamp of the asset's value on Band chain.
-    3. request_id: A request id on Band chain that relevant to the asset's value and timestamp.
+    | Name | Type | Description|
+    | ----------- | ----------- |------|
+    | rate | `u64` |The asset's value in dollars|
+    | resolve time | `u64` |A timestamp of the asset's value on Band chain|
+    | request id | `u64` |A request id on Band chain that relevant to the asset's value and timestamp|
 
 #### 🎉 Events
 
@@ -92,7 +94,7 @@ Runtime code should explicitly and gracefully handle all error cases, which is t
 - NotARelayer
   - This error will be raised when a non-relayer account attempts to relay anything into the pallet.
 
-#### 🛸 xtrinsics
+#### 🛸 Extrinsics
 
 An extrinsic is a piece of information that comes from outside the chain and is included in a block. Extrinsics fall into three categories: inherents, signed transactions, and unsigned transactions.
 
@@ -125,6 +127,52 @@ An extrinsic is a piece of information that comes from outside the chain and is 
 Functions that help other pallets to query information in this pallet.
 
 - get_refs(symbol: `Vec<u8>`) -> `Option<(u64, u64, u64)>`
+  - This function help query the raw data from the state for a given key.
+  - Params
+    | Name | Type | Description|
+    | ----------- | ----------- |------|
+    | symbol | `Vec<u8>` |A symbol of the asset|
+  - Output
+    `Option` of `(u64, u64, u64)`
+    | Name | Type | Description|
+    | ----------- | ----------- |------|
+    | rate | `u64` |The asset's value in dollars|
+    | resolve time | `u64` |A timestamp of the asset's value on Band chain|
+    | request id | `u64` |A request id on Band chain that relevant to the asset's value and timestamp|
 - get_ref_data(symbol: `Vec<u8>`) -> `Option<(u64, u64)>`
+  - This function help query the `(value in dollars) × 1_000_000_000` and `timestamp` of a given symbol. If the symbol == "USD" then return `1 × 1_000_000_000` instead. If the given symbol is not available in storage `Refs` then return `None` instead.
+  - Params
+    | Name | Type | Description|
+    | ----------- | ----------- |------|
+    | symbol | `Vec<u8>` |A symbol of the asset|
+  - Output
+    `Option` of `(u64, u64)`
+    | Name | Type | Description|
+    | ----------- | ----------- |------|
+    | rate | `u64` |The asset's value in dollars times 1_000_000_000|
+    | resolve time | `u64` |A timestamp of the asset's value on Band chain|
 - get_reference_data(base_symbol: `Vec<u8>`, quote_symbol: `Vec<u8>`) -> `Option<(u64, u64, u64)> `
+  This function help query the relative value of 2 assets (base asset, quote asset) and the timestamps of both assets. If both of these assets are present in the storage `Refs`, return `(relative value × 1_000_000_000, timestamp of base asset, timestamp oof quote asset)`, but if not, return is `None`.
+  - Params
+    | Name | Type | Description|
+    | ----------- | ----------- |------|
+    | base symbol | `Vec<u8>` |A symbol of the base asset|
+    | quote symbol | `Vec<u8>` |A symbol of the quote asset|
+  - Output
+    `Option` of `(u64, u64, u64)`
+    | Name | Type | Description|
+    | ----------- | ----------- |------|
+    | relative rate | `u64` |relative value of both assets times 1_000_000_000|
+    | base asset's timestamp | `u64` |A timestamp of the base asset's value on Band chain|
+    | quote asset's timestamp | `u64` |A timestamp of the quote asset's value on Band chain|
 - get_reference_data_bulk(base_quote_symbols: `Vec<(Vec<u8>, Vec<u8>)`>) -> `Option<Vec<(u64, u64, u64)>>`
+  This function query list of relative value of 2 assets (list of asset pairs). This function is basically a batch of `get_reference_data`.
+  - Params
+    | Name | Type | Description|
+    | ----------- | ----------- |------|
+    | list of pairs | `Vec<(Vec<u8>, Vec<u8>)` |A list of pairs of base symbol and quote symbol|
+  - Output
+    `Option` of `Vec<(u64, u64, u64)>`
+    | Name | Type | Description|
+    | ----------- | ----------- |------|
+    | list of relative rate and timestamps | `u64` |A list that contain tuple of relative value of both assets times 1_000_000_000, base timestamp and quote timestamp|
