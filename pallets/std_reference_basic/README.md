@@ -97,20 +97,20 @@ Runtime code should explicitly and gracefully handle all error cases, which is t
 An extrinsic is a piece of information that comes from outside the chain and is included in a block. Extrinsics fall into three categories: inherents, signed transactions, and unsigned transactions.
 
 - transfer_ownership(new_owner: `AccountId`)
-  - Allows you to transfer ownership to another account. This function can only be used by the owner.ม To change the owner, call `transfer_ownership(address new_owner)` as the owner.
+  - Allows you to transfer ownership to another account. This function can only be used by the owner.
   - Params
     | Name | Type | Description|
     | ----------- | ----------- |------|
     | new owner | `AccountId` |An account of the new owner|
 - set_relayer(relayer: `AccountId`, is_relayer: `bool`)
-  - Allows the owner to determine which account is a messenger or which account is not.
+  - Allows the owner to determine which account is a messenger or which account is not. This function can only be used by the owner.
   - Params
     | Name | Type | Description|
     | ----------- | ----------- |------|
     | relayer | `AccountId` |An account that is designated as a relayer or not as a relayer by the owner|
     | is_relayer | `bool` |A flag that indicates whether the above account is a relayer or not|
 - relay(values: `Vec<(Vec<u8>, u64, u64, u64)>`)
-  - Allows the relayer to relay external data into the pallet.
+  - Allows the relayer to relay external data into the pallet. This function can only be used by the relayer.
   - Params
     1. values: A list of tuple that consists of 4 arguments:
        | Name | Type | Description|
